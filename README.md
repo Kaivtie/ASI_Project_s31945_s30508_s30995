@@ -16,15 +16,15 @@ powiązane, ale nie zawierają gotowych rozwiązań ani zadań do wykonania wcze
 
 | Pole | Wartość |
 |---|---|
-| Zespół i integrator Sprintu 1 | TODO |
-| Dataset (id z `docs/datasets.md`) | TODO |
-| Źródło, licencja i cytowanie (DOI) | TODO |
-| Data pobrania danych | TODO |
-| SHA-256 pliku danych (`fingerprint.json`) | TODO |
-| Dane osobowe w zbiorze i sposób postępowania | TODO |
-| Target i klasa pozytywna | TODO |
-| Metryka główna i uzasadnienie | TODO |
-| Użytkownik systemu i decyzja, którą wspiera model | TODO |
+| Zespół i integrator Sprintu 1 | Ewelina Paczkowska s30995, Katarzyna Gronostajska s31945, Kacper Wierzba s30508 - integrator sprint 1|
+| Dataset (id z `docs/datasets.md`) | secondary_mushrooms |
+| Źródło, licencja i cytowanie (DOI) | UCI Machine Learning Repository, CC BY 4.0, DOI: https://doi.org/10.24432/C5FP5Q |
+| Data pobrania danych | 15.10.2026 |
+| SHA-256 pliku danych (`fingerprint.json`) | c0eb333df5747171cfc4356c966434b4e9ba1f099c4a0aa2c27f545853e6d203 |
+| Dane osobowe w zbiorze i sposób postępowania | brak danych osobowych, tylko grzyby |
+| Target i klasa pozytywna | class p - trujące e - jadalne, klasa pozytywna p (trujący) |
+| Metryka główna i uzasadnienie | Recall dla klasy trującej – ważne jest wykrycie jak największej liczby trujących grzybów, aby ograniczyć ryzyko uznania ich za jadalne. |
+| Użytkownik systemu i decyzja, którą wspiera model | Osoba, która chce zjeść grzyba. Model pomaga ustalić czy grzyb jest trujący czy jadalny |
 <!-- KARTA-PROJEKTU:END -->
 
 ## Mapa projektu

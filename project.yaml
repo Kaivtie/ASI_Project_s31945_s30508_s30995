@@ -2,12 +2,35 @@
 # Kontrakt datasetów prowadzącej jest w src/asi_project/datasets.yaml — tamtego pliku nie edytujemy.
 
 # TODO (S1): id datasetu z docs/datasets.md, np. ai4i_2020.
-dataset: null
+dataset: secondary_mushrooms
 
 # TODO (S1): typy cech po EDA. Wyłącznie kolumny z ALLOWED FEATURES wybranego datasetu.
+
 features:
-  numeric: []
-  categorical: []
+  numeric:
+    - cap-diameter
+    - stem-height
+    - stem-width
+
+  categorical:
+    - cap-shape
+    - cap-surface
+    - cap-color
+    - does-bruise-or-bleed
+    - gill-attachment
+    - gill-spacing
+    - gill-color
+    - stem-root
+    - stem-surface
+    - stem-color
+    - veil-type
+    - veil-color
+    - has-ring
+    - ring-type
+    - spore-print-color
+    - habitat
+    - season
+
 
 split:
   test_size: 0.2
