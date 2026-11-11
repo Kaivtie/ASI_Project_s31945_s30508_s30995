@@ -1,4 +1,3 @@
-
 from kedro.pipeline import Pipeline, node
 
 from .nodes import filter_data, normalize_data, validate_data

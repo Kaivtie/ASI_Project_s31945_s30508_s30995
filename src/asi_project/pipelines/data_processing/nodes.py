@@ -1,4 +1,3 @@
-
 import pandas as pd
 
 from asi_project.config import get_contract, load_project_config
