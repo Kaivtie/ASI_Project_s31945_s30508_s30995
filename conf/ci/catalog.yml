@@ -1,0 +1,13 @@
+raw_data:
+  filepath: data/01_raw/sample.csv
+  load_args:
+    sep: ","
+
+model_input:
+  filepath: data/02_intermediate/ci/mushrooms.csv
+
+model:
+  filepath: data/06_models/ci/baseline.pkl
+
+metrics:
+  filepath: data/08_reporting/ci/metrics.json
