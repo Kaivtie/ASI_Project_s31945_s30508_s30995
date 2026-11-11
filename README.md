@@ -56,6 +56,47 @@ Wszystkie projekty dotyczą binary classification. Dataset wybieracie z listy w
 [`docs/datasets.md`](docs/datasets.md) — tam są też ALLOWED i EXCLUDED FEATURES, moment
 predykcji i strategia splitu. Kilka zespołów może wybrać ten sam dataset.
 
+## Kedro quickstart (Sprint 2)
+
+Komendy odpalamy w folderze projektu. Najpierw włączamy środowisko `asi-ml`
+i instalujemy potrzebne pakiety:
+
+```bash
+conda env update -n asi-ml -f environment.yml --prune
+conda activate asi-ml
+python -m pip install -r requirements/preflight-s2.txt -c constraints.txt
+python -m pip install --no-deps -e .
+```
+
+Dane Mushroom pobieramy tak:
+
+```bash
+python scripts/download_data.py
+```
+
+Plik z danymi będzie w `data/01_raw/secondary_mushrooms/secondary_data.csv`.
+Potem odpalamy pipeline:
+
+```bash
+kedro run
+```
+
+Wyniki będą tutaj:
+
+- przygotowane dane: `data/02_intermediate/mushrooms.csv`;
+- model: `data/06_models/mushroom_model.pkl`;
+- model DummyClassifier: `data/06_models/baseline_model.pkl`;
+- metryki modelu: `data/08_reporting/model_metrics.json`;
+- metryki DummyClassifier: `data/08_reporting/baseline_metrics.json`.
+
+Na małej próbce `data/01_raw/sample.csv` odpalamy tak:
+
+```bash
+kedro run --env ci
+```
+
+Wyniki próbki będą w tych samych folderach co wyżej, ale w podfolderach `ci/`.
+
 ## Start Sprintu 1
 
 Wymagania: Miniforge (conda), Git, VS Code (wspierane oficjalnie) i środowisko `asi-ml`

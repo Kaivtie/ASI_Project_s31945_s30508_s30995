@@ -8,6 +8,12 @@ raw_data:
   load_args:
     sep: ";"
 
+model_input:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/mushrooms.csv
+  save_args:
+    index: false
+
 trained_model:
   type: pickle.PickleDataset
   filepath: data/06_models/mushroom_model.pkl
