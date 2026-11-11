@@ -47,6 +47,7 @@ def test_evaluate_model():
     assert set(metrics) == {"accuracy", "precision", "recall", "f1"}
     assert all(0 <= value <= 1 for value in metrics.values())
 
+
 def test_model_reproducibility():
     X, y = sample_data()
 
@@ -61,6 +62,7 @@ def test_model_reproducibility():
         model1.predict_proba(X),
         model2.predict_proba(X),
     )
+
 
 def test_missing_values_and_unknown_categories():
     X, y = sample_data()

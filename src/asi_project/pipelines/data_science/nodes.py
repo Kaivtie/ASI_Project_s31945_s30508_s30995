@@ -5,14 +5,11 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
 )
-from asi_project.model import build_baseline_pipeline, make_dummy
+
 from asi_project.config import DatasetContract, get_contract, load_project_config
-from asi_project.data import (
-    filter_training_rows,
-    make_xy,
-    normalize_input,
-    split_train_test,
-)
+from asi_project.data import make_xy, split_train_test
+from asi_project.model import build_baseline_pipeline, make_dummy
+
 
 def prepare_mushroom_data(
     data: pd.DataFrame,
@@ -20,16 +17,14 @@ def prepare_mushroom_data(
     config = load_project_config()
     contract = get_contract(config)
 
-    normalized_data = normalize_input(data)
-    filtered_data = filter_training_rows(normalized_data, contract)
-
     return prepare_train_test(
-        data=filtered_data,
+        data=data,
         contract=contract,
         features=list(config.model_features),
         test_size=config.test_size,
         random_state=config.random_state,
     )
+
 
 def train_model(
     X_train: pd.DataFrame,
@@ -51,19 +46,17 @@ def train_baseline(X_train: pd.DataFrame, y_train: pd.Series):
     baseline.fit(X_train, y_train)
     return baseline
 
+
 def evaluate_model(model, X_test: pd.DataFrame, y_test: pd.Series) -> dict:
     predictions = model.predict(X_test)
 
     return {
         "accuracy": float(accuracy_score(y_test, predictions)),
-        "precision": float(
-            precision_score(y_test, predictions, zero_division=0)
-        ),
-        "recall": float(
-            recall_score(y_test, predictions, zero_division=0)
-        ),
+        "precision": float(precision_score(y_test, predictions, zero_division=0)),
+        "recall": float(recall_score(y_test, predictions, zero_division=0)),
         "f1": float(f1_score(y_test, predictions, zero_division=0)),
     }
+
 
 def prepare_train_test(
     data: pd.DataFrame,

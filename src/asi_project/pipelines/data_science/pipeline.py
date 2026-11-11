@@ -13,7 +13,7 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 func=prepare_mushroom_data,
-                inputs="raw_data",
+                inputs="model_input",
                 outputs=["X_train", "X_test", "y_train", "y_test"],
                 name="prepare_mushroom_data_node",
             ),
