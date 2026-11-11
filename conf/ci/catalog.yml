@@ -6,8 +6,14 @@ raw_data:
 model_input:
   filepath: data/02_intermediate/ci/mushrooms.csv
 
-model:
-  filepath: data/06_models/ci/baseline.pkl
+trained_model:
+  filepath: data/06_models/ci/mushroom_model.pkl
 
-metrics:
-  filepath: data/08_reporting/ci/metrics.json
+baseline_model:
+  filepath: data/06_models/ci/baseline_model.pkl
+
+model_metrics:
+  filepath: data/08_reporting/ci/model_metrics.json
+
+baseline_metrics:
+  filepath: data/08_reporting/ci/baseline_metrics.json

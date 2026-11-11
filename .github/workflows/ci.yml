@@ -56,7 +56,8 @@ jobs:
           KEDRO_DISABLE_TELEMETRY: "1"
         run: |
           kedro run --env ci
-          python scripts/check_metrics.py data/08_reporting/ci/metrics.json --data-mode sample
+          python scripts/check_metrics.py data/08_reporting/ci/model_metrics.json --kedro
+          python scripts/check_metrics.py data/08_reporting/ci/baseline_metrics.json --kedro
 
       - name: Stan projektu
         id: status

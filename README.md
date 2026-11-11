@@ -81,11 +81,13 @@ Potem odpalamy pipeline:
 kedro run
 ```
 
-Do tego muszą być już dodane oba pipeline'y. Wyniki będą tutaj:
+Wyniki będą tutaj:
 
 - przygotowane dane: `data/02_intermediate/mushrooms.csv`;
-- model: `data/06_models/baseline.pkl`;
-- metryki: `data/08_reporting/metrics.json`.
+- model: `data/06_models/mushroom_model.pkl`;
+- model DummyClassifier: `data/06_models/baseline_model.pkl`;
+- metryki modelu: `data/08_reporting/model_metrics.json`;
+- metryki DummyClassifier: `data/08_reporting/baseline_metrics.json`.
 
 Na małej próbce `data/01_raw/sample.csv` odpalamy tak:
 
