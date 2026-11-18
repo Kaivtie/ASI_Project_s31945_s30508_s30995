@@ -2,9 +2,11 @@ import json
 import os
 import subprocess
 from pathlib import Path
+from uuid import uuid4
 
 import pandas as pd
 import wandb
+from autogluon.tabular import TabularPredictor
 from sklearn.metrics import (
     accuracy_score,
     f1_score,
@@ -160,3 +162,73 @@ def get_metadata() -> tuple[str, str]:
     fingerprint = json.loads(fingerprint_path.read_text(encoding="utf-8"))
 
     return git_sha, fingerprint["sha256"]
+
+
+def train_autogluon(
+    X_train: pd.DataFrame,
+    y_train: pd.Series,
+    model_type: str,
+    time_limit: int,
+    model_path: str,
+) -> TabularPredictor:
+    train_data = X_train.copy()
+    train_data["target"] = y_train
+
+    predictor = TabularPredictor(
+        label="target",
+        problem_type="binary",
+        positive_class=1,
+        eval_metric="recall",
+        path=model_path,
+    )
+
+    predictor.fit(
+        train_data=train_data,
+        hyperparameters={model_type: {}},
+        time_limit=time_limit,
+    )
+
+    return predictor
+
+
+def run_autogluon(
+    X_train: pd.DataFrame,
+    X_test: pd.DataFrame,
+    y_train: pd.Series,
+    y_test: pd.Series,
+    experiment: dict,
+) -> dict:
+    project_config = load_project_config()
+
+    model_path = project_config.root / "data" / "06_models" / experiment["name"] / uuid4().hex
+
+    predictor = train_autogluon(
+        X_train=X_train,
+        y_train=y_train,
+        model_type=experiment["model_type"],
+        time_limit=experiment["time_limit"],
+        model_path=str(model_path),
+    )
+
+    metrics = evaluate_model(predictor, X_test, y_test)
+
+    if os.environ.get("WANDB_MODE") != "disabled":
+        log(
+            name=experiment["name"],
+            parameters={
+                **experiment,
+                "dataset": project_config.dataset_id,
+                "test_size": project_config.test_size,
+                "random_state": project_config.random_state,
+                "features": list(project_config.model_features),
+                "eval_metric": "recall",
+                "positive_class": 1,
+                "hyperparameters": {
+                    experiment["model_type"]: {},
+                },
+                "model_path": str(model_path),
+            },
+            metrics=metrics,
+        )
+
+    return metrics

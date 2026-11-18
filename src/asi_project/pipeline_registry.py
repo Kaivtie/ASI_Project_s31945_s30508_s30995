@@ -5,13 +5,29 @@ Po przygotowaniu ``create_pipeline()`` w podpakietach
 Ten plik NIE zawiera implementacji nodów ani gotowego pipeline'u.
 """
 
-from kedro.framework.project import find_pipelines
 from kedro.pipeline import Pipeline
+
+from asi_project.pipelines.data_processing.pipeline import (
+    create_pipeline as create_data_processing_pipeline,
+)
+from asi_project.pipelines.data_science.pipeline import (
+    create_autogluon_pipeline,
+)
+from asi_project.pipelines.data_science.pipeline import (
+    create_pipeline as create_data_science_pipeline,
+)
 
 
 def register_pipelines() -> dict[str, Pipeline]:
-    pipelines = find_pipelines()
+    data_processing = create_data_processing_pipeline()
+    data_science = create_data_science_pipeline()
 
-    pipelines["__default__"] = pipelines["data_processing"] + pipelines["data_science"]
+    default = data_processing + data_science
+    experiments = default + create_autogluon_pipeline()
 
-    return pipelines
+    return {
+        "__default__": default,
+        "data_processing": data_processing,
+        "data_science": data_science,
+        "experiments": experiments,
+    }
