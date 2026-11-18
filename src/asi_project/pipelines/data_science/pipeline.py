@@ -2,6 +2,7 @@ from kedro.pipeline import Pipeline, node, pipeline
 
 from .nodes import (
     evaluate_model,
+    log_sprint2_results,
     prepare_mushroom_data,
     train_baseline,
     train_model,
@@ -45,6 +46,17 @@ def create_pipeline(**kwargs) -> Pipeline:
                 inputs=["trained_model", "X_test", "y_test"],
                 outputs="model_metrics",
                 name="evaluate_model_node",
+            ),
+            node(
+                func=log_sprint2_results,
+                inputs=[
+                    "baseline_model",
+                    "trained_model",
+                    "baseline_metrics",
+                    "model_metrics",
+                ],
+                outputs=None,
+                name="log_sprint2_results_node",
             ),
         ]
     )
