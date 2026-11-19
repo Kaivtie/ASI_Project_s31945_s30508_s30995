@@ -1,16 +1,15 @@
-
 import json
 import pickle
 import shutil
+import subprocess
+import sys
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
 from sklearn.pipeline import Pipeline
 
-import subprocess
-import sys
-from importlib.metadata import PackageNotFoundError, version
-
 from asi_project.config import get_contract, load_project_config
+
 
 def save_model_package(
     model,
@@ -42,9 +41,7 @@ def save_model_package(
 def load_model_package(package_path: str | Path):
     package_path = Path(package_path)
 
-    metadata = json.loads(
-        (package_path / "metadata.json").read_text(encoding="utf-8")
-    )
+    metadata = json.loads((package_path / "metadata.json").read_text(encoding="utf-8"))
 
     if (package_path / "model.pkl").exists():
         with (package_path / "model.pkl").open("rb") as file:
@@ -52,9 +49,7 @@ def load_model_package(package_path: str | Path):
     else:
         from autogluon.tabular import TabularPredictor
 
-        model = TabularPredictor.load(
-            str(package_path / "autogluon_model")
-        )
+        model = TabularPredictor.load(str(package_path / "autogluon_model"))
 
     return model, metadata
 
@@ -69,17 +64,9 @@ def create_model_metadata(model_name: str, metrics: dict) -> dict:
         text=True,
     ).strip()
 
-    fingerprint_path = (
-        config.root
-        / "data"
-        / "01_raw"
-        / "secondary_mushrooms"
-        / "fingerprint.json"
-    )
+    fingerprint_path = config.root / "data" / "01_raw" / "secondary_mushrooms" / "fingerprint.json"
 
-    fingerprint = json.loads(
-        fingerprint_path.read_text(encoding="utf-8")
-    )
+    fingerprint = json.loads(fingerprint_path.read_text(encoding="utf-8"))
 
     libraries = {}
 
@@ -101,4 +88,3 @@ def create_model_metadata(model_name: str, metrics: dict) -> dict:
         "python_version": sys.version.split()[0],
         "library_versions": libraries,
     }
-

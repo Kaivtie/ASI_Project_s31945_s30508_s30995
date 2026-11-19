@@ -1,10 +1,10 @@
-
-from pathlib import Path
 import time
 import tracemalloc
+from pathlib import Path
+
 import pandas as pd
 from autogluon.tabular import TabularPredictor
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 
 from asi_project.pipelines.data_science.nodes import prepare_mushroom_data
 

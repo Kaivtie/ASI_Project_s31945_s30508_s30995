@@ -1,4 +1,3 @@
-
 import json
 from pathlib import Path
 
@@ -10,8 +9,8 @@ from asi_project.model_package import (
     save_model_package,
 )
 from asi_project.pipelines.data_science.nodes import (
-    prepare_mushroom_data,
     evaluate_model,
+    prepare_mushroom_data,
 )
 
 model_directory = Path("data/06_models/s3-catboost")

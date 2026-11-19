@@ -2,8 +2,8 @@
 
 - **Status:** proponowany
 - **Sprint:** S3
-- **Autor:** Ewelina 
-- **Recenzent:** Kasia 
+- **Autor:** Ewelina
+- **Recenzent:** Kasia
 
 ## Kontekst
 
