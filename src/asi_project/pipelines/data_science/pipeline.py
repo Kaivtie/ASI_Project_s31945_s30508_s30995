@@ -1,8 +1,12 @@
+from functools import partial
+
 from kedro.pipeline import Pipeline, node, pipeline
 
 from .nodes import (
     evaluate_model,
+    log_sprint2_results,
     prepare_mushroom_data,
+    run_autogluon,
     train_baseline,
     train_model,
 )
@@ -46,5 +50,46 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="model_metrics",
                 name="evaluate_model_node",
             ),
+            node(
+                func=log_sprint2_results,
+                inputs=[
+                    "baseline_model",
+                    "trained_model",
+                    "baseline_metrics",
+                    "model_metrics",
+                ],
+                outputs=None,
+                name="log_sprint2_results_node",
+            ),
+        ]
+    )
+
+
+def create_autogluon_pipeline() -> Pipeline:
+    experiments = [
+        {
+            "name": "s3-lightgbm",
+            "model_type": "GBM",
+            "time_limit": 120,
+        },
+        {
+            "name": "s3-catboost",
+            "model_type": "CAT",
+            "time_limit": 120,
+        },
+    ]
+
+    return pipeline(
+        [
+            node(
+                func=partial(
+                    run_autogluon,
+                    experiment=experiment,
+                ),
+                inputs=["X_train", "X_test", "y_train", "y_test"],
+                outputs=f"{experiment['name']}_metrics",
+                name=f"{experiment['name']}_node",
+            )
+            for experiment in experiments
         ]
     )
