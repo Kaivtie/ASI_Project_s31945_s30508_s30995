@@ -22,3 +22,39 @@
 | wspólny smoke API | S4 → S6 | `/healthz` → tryb persistence → `/predict` z tokenem → kontrakt odpowiedzi → w trybie `sql` zapisany rekord, w trybie `disabled` brak wymogu zapisu; ten sam skrypt na kontenerze, na compose i na Cloud Run |
 
 Skrypt wdrożenia (`deploy.sh`, Sprint 6) znajdzie się w katalogu `deploy/`.
+
+
+## Model produkcyjny (Sprint 3)
+
+Model produkcyjny jest przechowywany w W&B jako Artifact:
+
+`bonsai-better-than-fable/Shrooms/mushroom-model:production`
+
+### Publikacja pakietu modelu
+
+```bash
+wandb login
+python scripts/publish_model.py --package-path data/06_models/production_clean
+```
+
+Publikacja wymaga gotowego pakietu modelu oraz dostępu do projektu W&B.
+
+### Smoke test
+
+```bash
+python scripts/smoke_model.py
+```
+
+Skrypt pobiera artefakt `production`, wczytuje model bez ponownego
+treningu, wykonuje predykcję dla 5 wierszy i sprawdza schemat wyniku.
+
+Smoke test wymaga dostępu do W&B i jest wykonywany poza CI.
+
+### Testy automatyczne
+
+```bash
+WANDB_MODE=disabled python -m pytest -q
+pre-commit run --all-files
+```
+
+Testy automatyczne nie wymagają połączenia z W&B.
