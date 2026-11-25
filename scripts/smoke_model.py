@@ -1,4 +1,3 @@
-
 import json
 from tempfile import TemporaryDirectory
 
@@ -38,9 +37,7 @@ def main() -> None:
         if not predictions.isin([0, 1]).all():
             raise ValueError("Nieprawidłowe klasy predykcji")
 
-        result = {
-            "predictions": [int(value) for value in predictions]
-        }
+        result = {"predictions": [int(value) for value in predictions]}
 
         print(json.dumps(result, indent=2))
         print("Smoke test: OK")

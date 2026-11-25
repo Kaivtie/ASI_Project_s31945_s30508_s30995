@@ -1,4 +1,3 @@
-
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -10,9 +9,7 @@ from asi_project.wandb_artifact import (
 
 
 def test_publish_model_artifact(tmp_path):
-    (tmp_path / "metadata.json").write_text(
-        "{}", encoding="utf-8"
-    )
+    (tmp_path / "metadata.json").write_text("{}", encoding="utf-8")
     (tmp_path / "model.pkl").write_bytes(b"test-model")
 
     with (
@@ -57,9 +54,7 @@ def test_publish_missing_metadata(tmp_path):
 
 
 def test_publish_missing_model(tmp_path):
-    (tmp_path / "metadata.json").write_text(
-        "{}", encoding="utf-8"
-    )
+    (tmp_path / "metadata.json").write_text("{}", encoding="utf-8")
 
     with pytest.raises(FileNotFoundError, match="Brak zapisanego modelu"):
         publish_model_artifact(tmp_path)

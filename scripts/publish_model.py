@@ -1,4 +1,3 @@
-
 import argparse
 from pathlib import Path
 
@@ -6,9 +5,7 @@ from asi_project.wandb_artifact import publish_model_artifact
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Publikacja pakietu modelu produkcyjnego w W&B."
-    )
+    parser = argparse.ArgumentParser(description="Publikacja pakietu modelu produkcyjnego w W&B.")
     parser.add_argument(
         "--package-path",
         type=Path,
